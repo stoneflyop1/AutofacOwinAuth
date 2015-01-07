@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutofacOwinAuth.Core", "AutofacOwinAuth.Core\AutofacOwinAuth.Core.csproj", "{16C9F8E0-7209-4A8F-8964-8FA4E9D4DBAC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutofacOwinAuth.WebAPI", "AutofacOwinAuth.WebAPI\AutofacOwinAuth.WebAPI.csproj", "{51506622-D4B5-4F34-AD41-760E79C0D64E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutofacOwinAuth.WebAPI.Tests", "AutofacOwinAuth.WebAPI.Tests\AutofacOwinAuth.WebAPI.Tests.csproj", "{3C4D4B5C-6CDF-4F07-A3E1-036EFE5C933C}"
+EndProject
+Global
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{16C9F8E0-7209-4A8F-8964-8FA4E9D4DBAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16C9F8E0-7209-4A8F-8964-8FA4E9D4DBAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16C9F8E0-7209-4A8F-8964-8FA4E9D4DBAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16C9F8E0-7209-4A8F-8964-8FA4E9D4DBAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51506622-D4B5-4F34-AD41-760E79C0D64E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51506622-D4B5-4F34-AD41-760E79C0D64E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51506622-D4B5-4F34-AD41-760E79C0D64E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51506622-D4B5-4F34-AD41-760E79C0D64E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C4D4B5C-6CDF-4F07-A3E1-036EFE5C933C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C4D4B5C-6CDF-4F07-A3E1-036EFE5C933C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C4D4B5C-6CDF-4F07-A3E1-036EFE5C933C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C4D4B5C-6CDF-4F07-A3E1-036EFE5C933C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
