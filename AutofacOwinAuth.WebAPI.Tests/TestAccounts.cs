@@ -78,7 +78,7 @@ namespace AutofacOwinAuth.WebAPI.Tests
                 return token;
             }
         }
-
+        // Test Auth and use auth to request another api (use get method)
         [Test]
         public void TestToken()
         {
@@ -92,6 +92,7 @@ namespace AutofacOwinAuth.WebAPI.Tests
             Assert.AreEqual(HttpStatusCode.OK, vRes.Result.StatusCode);
         }
 
+        //Test Auth and use auth to change password (use post method)
         [Test]
         public void TestPasswords()
         {
