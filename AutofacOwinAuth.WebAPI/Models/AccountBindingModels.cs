@@ -81,4 +81,27 @@ namespace AutofacOwinAuth.WebAPI.Models
         [Compare("NewPassword", ErrorMessage = "新密码和确认密码不匹配。")]
         public string ConfirmPassword { get; set; }
     }
+
+    public class ResetPasswordTokenBindingModel
+    {
+        [Required]
+        [Display(Name = "电子邮件")]
+        public string Email { get; set; }
+    }
+
+    public class ResetPasswordTokenResultModel
+    {
+        public int UserId { get; set; }
+
+        public string Token { get; set; }
+    }
+
+    public class ResetPasswordBindingModel<TKey>
+    {
+        public TKey UserId { get; set; }
+
+        public string Token { get; set; }
+
+        public string NewPassword { get; set; }
+    }
 }

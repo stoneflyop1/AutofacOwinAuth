@@ -115,6 +115,35 @@ namespace AutofacOwinAuth.WebAPI.Controllers
 
             return Ok();
         }
+        [AllowAnonymous]
+        [Route("ResetPasswordToken")]
+        public async Task<IHttpActionResult> ResetPasswordToken(ResetPasswordTokenBindingModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user.Id);
+            var resModel = new ResetPasswordTokenResultModel {UserId = user.Id, Token = token};
+            return Ok(resModel);
+        }
+        [AllowAnonymous]
+        [Route("ResetPassword")]
+        public async Task<IHttpActionResult> ResetPassword(ResetPasswordBindingModel<int> model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var result = await _userManager.ResetPasswordAsync(model.UserId, model.Token, model.NewPassword);
+            if (!result.Succeeded)
+            {
+                return GetErrorResult(result);
+            }
+
+            return Ok();
+        }
 
         // POST api/Account/SetPassword
         [Route("SetPassword")]

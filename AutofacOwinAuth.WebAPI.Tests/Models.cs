@@ -49,4 +49,18 @@ namespace AutofacOwinAuth.WebAPI.Tests
         public string Password { get; set; }
         public string ConfirmPassword { get; set; }
     }
+
+    public class ResetPasswordTokenModel
+    {
+        public string Email { get; set; }
+    }
+
+    public class ResetPasswordModel
+    {
+        public int UserId { get; set; }
+
+        public string Token { get; set; }
+
+        public string NewPassword { get; set; }
+    }
 }
