@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace AutofacOwinAuth.WebAPI.Tests
 {
@@ -31,9 +32,11 @@ namespace AutofacOwinAuth.WebAPI.Tests
 
     public class TokenModel
     {
-        public string access_token { get; set; }
+        [JsonProperty(PropertyName = "access_token")]
+        public string AccessToken { get; set; }
 
-        public string token_type { get; set; }
+        [JsonProperty(PropertyName = "token_type")]
+        public string TokenType { get; set; }
 
         //public string userName { get; set; }
 

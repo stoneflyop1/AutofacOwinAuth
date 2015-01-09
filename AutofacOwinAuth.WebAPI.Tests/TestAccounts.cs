@@ -92,7 +92,7 @@ namespace AutofacOwinAuth.WebAPI.Tests
         {
             var token = GetToken(new AccountModel {UserName = Email, Password = Password});
             var client = GetClient();
-            client.DefaultRequestHeaders.Add("Authorization", token.token_type + " " + token.access_token);
+            client.DefaultRequestHeaders.Add("Authorization", token.TokenType + " " + token.AccessToken);
 
             var vRes = client.GetAsync("/values/Get/1");
             vRes.Wait();
@@ -110,7 +110,7 @@ namespace AutofacOwinAuth.WebAPI.Tests
             var token = GetToken(accountModel);
             var pass = "test@123A";//"test@123B";//
             var client = GetClient();
-            client.DefaultRequestHeaders.Add("Authorization", token.token_type + " " + token.access_token);
+            client.DefaultRequestHeaders.Add("Authorization", token.TokenType + " " + token.AccessToken);
             var changePassModel = new ChangePasswordModel
             {
                 OldPassword = password,
@@ -126,7 +126,7 @@ namespace AutofacOwinAuth.WebAPI.Tests
             // {"Message":"请求无效。","ModelState":{"":["已为用户设置了密码。"]}}
             token = GetToken(new AccountModel {UserName = Email, Password = pass});
             client.DefaultRequestHeaders.Remove("Authorization");
-            client.DefaultRequestHeaders.Add("Authorization", token.token_type + " " + token.access_token);
+            client.DefaultRequestHeaders.Add("Authorization", token.TokenType + " " + token.AccessToken);
             var setPassModel = new SetPasswordModel { NewPassword = password, ConfirmPassword = password };
             var sRes = client.PostAsJsonAsync("/api/Account/SetPassword", setPassModel);
             sRes.Wait();
