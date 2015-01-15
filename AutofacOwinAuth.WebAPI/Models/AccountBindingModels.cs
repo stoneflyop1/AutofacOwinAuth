@@ -82,25 +82,11 @@ namespace AutofacOwinAuth.WebAPI.Models
         public string ConfirmPassword { get; set; }
     }
 
-    public class ResetPasswordTokenBindingModel
+    public class ResetPasswordBindingModel
     {
         [Required]
         [Display(Name = "电子邮件")]
         public string Email { get; set; }
-    }
-
-    public class ResetPasswordTokenResultModel
-    {
-        public int UserId { get; set; }
-
-        public string Token { get; set; }
-    }
-
-    public class ResetPasswordBindingModel<TKey>
-    {
-        public TKey UserId { get; set; }
-
-        public string Token { get; set; }
 
         public string NewPassword { get; set; }
     }

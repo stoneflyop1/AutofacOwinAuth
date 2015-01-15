@@ -140,22 +140,11 @@ namespace AutofacOwinAuth.WebAPI.Tests
         {
             var email = Email;
             var newPassword = Password;
-            var resetPassModel = new ResetPasswordTokenModel {Email = email};
+            var resetPassModel = new ResetPasswordModel {Email = email, NewPassword=newPassword};
             var client = GetClient();
-            var tokenRes = client.PostAsJsonAsync("/api/Account/ResetPasswordToken", resetPassModel);
-            tokenRes.Wait();
-            if (tokenRes.Result.IsSuccessStatusCode)
-            {
-                var tokenModel =
-                    JsonConvert.DeserializeObject<ResetPasswordModel>(
-                        tokenRes.Result.Content.ReadAsStringAsync().Result);
-                tokenModel.NewPassword = newPassword;
-                var resetRes = client.PostAsJsonAsync("/api/Account/ResetPassword", tokenModel);
-                resetRes.Wait();
-                var resetObj = resetRes.Result;
-                var content = resetObj.Content.ReadAsStringAsync().Result;
-                Assert.AreEqual(HttpStatusCode.OK, resetObj.StatusCode);
-            }
+            var resetRes = client.PostAsJsonAsync("/api/Account/ResetPassword", resetPassModel);
+            resetRes.Wait();
+            Assert.AreEqual(true, resetRes.Result.IsSuccessStatusCode);
         }
     }
 }

@@ -185,14 +185,14 @@ namespace AutofacOwinAuth.WebAPI
         public ApplicationUserManager(IUserStore<User, int> store)
             : base(store)
         {
-            this.UserValidator = new UserValidator<User, int>(this)
+            UserValidator = new UserValidator<User, int>(this)
             {
                 AllowOnlyAlphanumericUserNames = false,
                 RequireUniqueEmail = true
             };
 
             // Configure validation logic for passwords
-            this.PasswordValidator = new PasswordValidator
+            PasswordValidator = new PasswordValidator
             {
                 RequiredLength = 6,
                 RequireNonLetterOrDigit = false,
@@ -202,18 +202,38 @@ namespace AutofacOwinAuth.WebAPI
             };
 
             // Configure user lockout defaults
-            this.UserLockoutEnabledByDefault = true;
-            this.DefaultAccountLockoutTimeSpan = TimeSpan.FromMinutes(5);
-            this.MaxFailedAccessAttemptsBeforeLockout = 5;
+            UserLockoutEnabledByDefault = true;
+            DefaultAccountLockoutTimeSpan = TimeSpan.FromMinutes(5);
+            MaxFailedAccessAttemptsBeforeLockout = 5;
 
             var dataProtectionProvider = Startup.DataProtectionProvider;
             if (dataProtectionProvider != null)
             {
                 IDataProtector dataProtector = dataProtectionProvider.Create("ASP.NET Identity");
 
-                this.UserTokenProvider = new DataProtectorTokenProvider<User, int>(dataProtector);
+                UserTokenProvider = new DataProtectorTokenProvider<User, int>(dataProtector);
             }
         }
-        
+
+
+        public override Task<IdentityResult> ChangePasswordAsync(int userId, string currentPassword, string newPassword)
+        {
+            return base.ChangePasswordAsync(userId, currentPassword, newPassword);
+        }
+
+        public override Task<bool> CheckPasswordAsync(User user, string password)
+        {
+            return base.CheckPasswordAsync(user, password);
+        }
+
+        public override Task<IdentityResult> CreateAsync(User user, string password)
+        {
+            return base.CreateAsync(user, password);
+        }
+
+        public override Task<IdentityResult> ResetPasswordAsync(int userId, string token, string newPassword)
+        {
+            return base.ResetPasswordAsync(userId, token, newPassword);
+        }
     }
 }
