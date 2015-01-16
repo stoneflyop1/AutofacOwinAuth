@@ -71,8 +71,7 @@ namespace AutofacOwinAuth.WebAPI
         public Task SetPasswordHashAsync(User user, string passwordHash)
         {
             user.Password = passwordHash;
-            _serv.UpdateUser(user);
-            return Task.FromResult<object>(null);
+            return Task.Run(() => _serv.UpdateUser(user));
         }
 
         public Task<User> FindByEmailAsync(string email)
@@ -148,11 +147,9 @@ namespace AutofacOwinAuth.WebAPI
 
     public static class UserExtensions
     {
-        public static async Task<ClaimsIdentity> CreateUserIdentityAsync(this User user, UserManager<User, int> userManager)
+        public static Task<ClaimsIdentity> CreateUserIdentityAsync(this User user, UserManager<User, int> userManager)
         {
-            var userIdentity = await userManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
-            // 在此处添加自定义用户声明
-            return userIdentity;
+            return userManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
         }
     }
 
@@ -170,10 +167,10 @@ namespace AutofacOwinAuth.WebAPI
 
         public override Task<SignInStatus> PasswordSignInAsync(string userName, string password, bool isPersistent, bool shouldLockout)
         {
-            var user = UserManager.FindByNameAsync(userName);
-            user.Wait();
-            var ok = UserManager.CheckPasswordAsync(user.Result, password);
-            ok.Wait();
+            //var user = UserManager.FindByNameAsync(userName);
+            //user.Wait();
+            //var ok = UserManager.CheckPasswordAsync(user.Result, password);
+            //ok.Wait();
             //password will be hashed in UserManager using its PasswordHash Property
             return base.PasswordSignInAsync(userName, password, isPersistent, shouldLockout);
         }

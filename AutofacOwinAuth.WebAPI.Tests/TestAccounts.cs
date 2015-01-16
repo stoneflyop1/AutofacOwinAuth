@@ -18,7 +18,7 @@ namespace AutofacOwinAuth.WebAPI.Tests
 
         private static string routPrefix = "api/Account";
 
-        private static string Email = "test1@123.com";
+        private static string Email = "test22@123.com";
         private static string Password = "test@123B";//
         private static string NewPassword = "test@123A"; //
 
@@ -131,7 +131,7 @@ namespace AutofacOwinAuth.WebAPI.Tests
             var sRes = client.PostAsJsonAsync("/api/Account/SetPassword", setPassModel);
             sRes.Wait();
             var sContent = sRes.Result.Content.ReadAsStringAsync().Result;
-            Assert.AreEqual(HttpStatusCode.OK, sRes.Result.StatusCode);
+            Assert.AreEqual(HttpStatusCode.BadRequest, sRes.Result.StatusCode);
 
         }
 
