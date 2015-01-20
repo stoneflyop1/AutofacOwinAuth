@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using NUnit.Framework;
-using Thinktecture.IdentityModel.Client;
 
 namespace AutofacOwinAuth.WebAPI.Tests
 {
@@ -18,6 +17,7 @@ namespace AutofacOwinAuth.WebAPI.Tests
 
         private static string routPrefix = "api/Account";
 
+        private static string UserName = "test22";
         private static string Email = "test22@123.com";
         private static string Password = "test@123B";//
         private static string NewPassword = "test@123A"; //
@@ -36,25 +36,11 @@ namespace AutofacOwinAuth.WebAPI.Tests
         {
             var client = GetClient();
             var password = Password;
-            var model = new RegisterBindingModel { Email = Email, Password = password, ConfirmPassword = password };
+            var model = new RegisterBindingModel { UserName=UserName, Email = Email, 
+                Password = password, ConfirmPassword = password };
             var res = client.PostAsJsonAsync(routPrefix + "/Register", model);
             res.Wait();
             Assert.AreEqual(HttpStatusCode.OK, res.Result.StatusCode);
-        }
-
-
-        [Test]
-        public void TestToken0()
-        {
-            var client = new OAuth2Client(new Uri(Host+"Token"));
-            var email = Email;
-            var password = Password;
-
-            var res = client.RequestResourceOwnerPasswordAsync(email, password);
-            res.Wait();
-            var obj = res.Result;
-            
-            Assert.AreEqual(false, obj.IsError);
         }
 
         private TokenModel GetToken(AccountModel model)
@@ -88,9 +74,22 @@ namespace AutofacOwinAuth.WebAPI.Tests
         }
         // Test Auth and use auth to request another api (use get method)
         [Test]
-        public void TestToken()
+        public void TestTokenByUserName()
         {
-            var token = GetToken(new AccountModel {UserName = Email, Password = Password});
+            var token = GetToken(new AccountModel {UserName = UserName, Password = Password});
+            var client = GetClient();
+            client.DefaultRequestHeaders.Add("Authorization", token.TokenType + " " + token.AccessToken);
+
+            var vRes = client.GetAsync("/values/Get/1");
+            vRes.Wait();
+            var content = JsonConvert.DeserializeObject(vRes.Result.Content.ReadAsStringAsync().Result);
+            Assert.AreEqual(HttpStatusCode.OK, vRes.Result.StatusCode);
+        }
+
+        [Test]
+        public void TestTokenByEmail()
+        {
+            var token = GetToken(new AccountModel { UserName = Email, Password = Password });
             var client = GetClient();
             client.DefaultRequestHeaders.Add("Authorization", token.TokenType + " " + token.AccessToken);
 

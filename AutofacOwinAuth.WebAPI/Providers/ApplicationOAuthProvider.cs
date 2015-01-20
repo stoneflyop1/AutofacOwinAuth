@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using AutofacOwinAuth.Core;
 using AutofacOwinAuth.Core.Domain;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -37,7 +38,23 @@ namespace AutofacOwinAuth.WebAPI.Providers
             var userManager = scope.Resolve<UserManager<User, int>>();
             //// userManager will be null if using code below
             //var userManager = context.OwinContext.GetUserManager <UserManager<User, int>>();
-            var user = await userManager.FindAsync(context.UserName, context.Password);
+
+            var isEmail = Utility.IsValidEmail(context.UserName);
+            User user = null;
+            if (isEmail)
+            {
+                user = await userManager.FindByEmailAsync(context.UserName);
+                bool passwordOK = await userManager.CheckPasswordAsync(user, context.Password);
+                if (!passwordOK)
+                {
+                    context.SetError("invalid_grant", "password is incorrect.");
+                    return;
+                }
+            }
+            else
+            {
+                user = await userManager.FindAsync(context.UserName, context.Password);
+            }
 
             if (user == null)
             {

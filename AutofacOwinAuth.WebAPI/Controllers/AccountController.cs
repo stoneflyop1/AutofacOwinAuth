@@ -352,7 +352,7 @@ namespace AutofacOwinAuth.WebAPI.Controllers
             }
             var user = new User
             {
-                UserName = model.Email,
+                UserName = model.UserName,
                 Email = model.Email
             };
 
