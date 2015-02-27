@@ -29,7 +29,7 @@ namespace AutofacOwinAuth.WebAPI.Tests
         public void TestPostFromURL()
         {
             var client = TestAccounts.GetClient();
-            var res = client.PostAsync(_routePrefix + "?value1=value1", "value2", new System.Net.Http.Formatting.JsonMediaTypeFormatter());
+            var res = client.PostAsync(_routePrefix + "?value1=value1&save=true", "value2", new System.Net.Http.Formatting.JsonMediaTypeFormatter());
             Assert.IsTrue(res.Result.IsSuccessStatusCode);
         }
     }
