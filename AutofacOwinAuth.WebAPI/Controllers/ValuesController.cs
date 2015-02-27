@@ -34,6 +34,12 @@ namespace AutofacOwinAuth.WebAPI.Controllers
             }
             return "value";
         }
+        [AllowAnonymous]
+        public bool Get([FromUri] string value1, string value2)
+        {
+            var values = Get();
+            return values.Any(c => c == value1) && values.Any(c=>c==value2);
+        }
 
         // POST api/values
         public void Post([FromBody]string value)

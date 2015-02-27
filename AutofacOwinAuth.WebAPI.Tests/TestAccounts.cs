@@ -23,7 +23,7 @@ namespace AutofacOwinAuth.WebAPI.Tests
         private static string NewPassword = "test@123A"; //
 
 
-        private static HttpClient GetClient()
+        internal static HttpClient GetClient()
         {
             var client = new HttpClient
             {
