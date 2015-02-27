@@ -45,6 +45,11 @@ namespace AutofacOwinAuth.WebAPI.Controllers
         public void Post([FromBody]string value)
         {
         }
+        [AllowAnonymous]
+        public void Post([FromUri] string value1, [FromBody]string value2)
+        {
+            
+        }
 
         // PUT api/values/5
         public void Put(int id, [FromBody]string value)
