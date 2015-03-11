@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using AutofacOwinAuth.WebAPI.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
@@ -41,14 +42,20 @@ namespace AutofacOwinAuth.WebAPI.Controllers
             return values.Any(c => c == value1) && values.Any(c=>c==value2);
         }
 
-        // POST api/values
-        public void Post([FromBody]string value)
-        {
-        }
+        //// POST api/values
+        //public void Post([FromBody]string value)
+        //{
+        //}
         [AllowAnonymous]
         public void Post([FromUri] string value1, bool save, [FromBody]string value2)
         {
             
+        }
+        [AllowAnonymous]
+        public IHttpActionResult Post(DateModel model)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            return Ok();
         }
 
         // PUT api/values/5

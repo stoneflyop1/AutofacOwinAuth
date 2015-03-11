@@ -32,5 +32,15 @@ namespace AutofacOwinAuth.WebAPI.Tests
             var res = client.PostAsync(_routePrefix + "?value1=value1&save=true", "value2", new System.Net.Http.Formatting.JsonMediaTypeFormatter());
             Assert.IsTrue(res.Result.IsSuccessStatusCode);
         }
+
+        [Test]
+        public void TestSetDate()
+        {
+            var client = TestAccounts.GetClient();
+            var res = client.PostAsJsonAsync(_routePrefix, new {Date = new DateTime()}).Result;
+            var resContent = res.Content.ReadAsStringAsync().Result;
+            Assert.IsTrue(!String.IsNullOrEmpty(resContent));
+            Assert.AreEqual(HttpStatusCode.BadRequest, res.StatusCode);
+        }
     }
 }
