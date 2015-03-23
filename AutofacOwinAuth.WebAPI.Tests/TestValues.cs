@@ -41,6 +41,8 @@ namespace AutofacOwinAuth.WebAPI.Tests
             var resContent = res.Content.ReadAsStringAsync().Result;
             Assert.IsTrue(!String.IsNullOrEmpty(resContent));
             Assert.AreEqual(HttpStatusCode.BadRequest, res.StatusCode);
+            var model = JsonConvert.DeserializeObject<ErrorResponseModel>(resContent);
+            Assert.NotNull(model);
         }
     }
 }

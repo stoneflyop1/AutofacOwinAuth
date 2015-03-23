@@ -61,4 +61,11 @@ namespace AutofacOwinAuth.WebAPI.Tests
 
         public string NewPassword { get; set; }
     }
+
+    public class ErrorResponseModel
+    {
+        public string Message { get; set; }
+
+        public Dictionary<string, string[]> ModelState { get; set; }
+    }
 }
