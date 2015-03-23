@@ -13,17 +13,17 @@ namespace AutofacOwinAuth.WebAPI.Tests
     [TestFixture]
     public class TestAccounts
     {
-        private static string Host = "http://localhost:40772/";
+        private static string Host = "http://localhost:13648/";
 
-        private static string routPrefix = "api/Account";
+        private static string routPrefix = "api/Auth";
 
-        private static string UserName = "test22";
-        private static string Email = "test22@123.com";
-        private static string Password = "test@123B";//
-        private static string NewPassword = "test@123A"; //
+        private static string UserName = "qq@qq.com";
+        private static string Email = "qq@qq.com";
+        private static string Password = "123456";//
+        private static string NewPassword = "654321"; //
 
 
-        internal static HttpClient GetClient()
+        static HttpClient GetClient()
         {
             var client = new HttpClient
             {
@@ -43,7 +43,12 @@ namespace AutofacOwinAuth.WebAPI.Tests
             Assert.AreEqual(HttpStatusCode.OK, res.Result.StatusCode);
         }
 
-        private TokenModel GetToken(AccountModel model)
+        public static TokenModel GetToken()
+        {
+            return GetToken(new AccountModel {UserName = UserName, Password = Password});
+        }
+
+        internal static TokenModel GetToken(AccountModel model)
         {
             using (var client = GetClient())
             {
@@ -77,26 +82,14 @@ namespace AutofacOwinAuth.WebAPI.Tests
         public void TestTokenByUserName()
         {
             var token = GetToken(new AccountModel {UserName = UserName, Password = Password});
-            var client = GetClient();
-            client.DefaultRequestHeaders.Add("Authorization", token.TokenType + " " + token.AccessToken);
-
-            var vRes = client.GetAsync("/values/Get/1");
-            vRes.Wait();
-            var content = JsonConvert.DeserializeObject(vRes.Result.Content.ReadAsStringAsync().Result);
-            Assert.AreEqual(HttpStatusCode.OK, vRes.Result.StatusCode);
+            Assert.NotNull(token);
         }
 
         [Test]
         public void TestTokenByEmail()
         {
             var token = GetToken(new AccountModel { UserName = Email, Password = Password });
-            var client = GetClient();
-            client.DefaultRequestHeaders.Add("Authorization", token.TokenType + " " + token.AccessToken);
-
-            var vRes = client.GetAsync("/values/Get/1");
-            vRes.Wait();
-            var content = JsonConvert.DeserializeObject(vRes.Result.Content.ReadAsStringAsync().Result);
-            Assert.AreEqual(HttpStatusCode.OK, vRes.Result.StatusCode);
+            Assert.NotNull(token);
         }
 
         //Test Auth and use auth to change password (use post method)
@@ -105,21 +98,20 @@ namespace AutofacOwinAuth.WebAPI.Tests
         {
             var email = Email;
             var password = Password;
-            var accountModel = new AccountModel { UserName = email, Password = password };
+            var accountModel = new AccountModel { UserName = email, Password = NewPassword };
             var token = GetToken(accountModel);
-            var pass = "test@123A";//"test@123B";//
+            var pass = NewPassword;//"test@123B";//
             var client = GetClient();
             client.DefaultRequestHeaders.Add("Authorization", token.TokenType + " " + token.AccessToken);
             var changePassModel = new ChangePasswordModel
             {
-                OldPassword = password,
+                OldPassword = NewPassword,
                 NewPassword = pass,
                 ConfirmPassword = pass
             };
-            var cRes = client.PostAsJsonAsync("/api/Account/ChangePassword", changePassModel);
-            cRes.Wait();
-            var content = cRes.Result.Content.ReadAsStringAsync().Result;
-            Assert.AreEqual(HttpStatusCode.OK, cRes.Result.StatusCode);
+            var cRes = client.PostAsJsonAsync(routPrefix+"/ChangePassword", changePassModel).Result;
+            var content = cRes.Content.ReadAsStringAsync().Result;
+            Assert.AreEqual(HttpStatusCode.OK, cRes.StatusCode);
 
             // If password has been setted, will throw exception
             // {"Message":"请求无效。","ModelState":{"":["已为用户设置了密码。"]}}
@@ -127,10 +119,9 @@ namespace AutofacOwinAuth.WebAPI.Tests
             client.DefaultRequestHeaders.Remove("Authorization");
             client.DefaultRequestHeaders.Add("Authorization", token.TokenType + " " + token.AccessToken);
             var setPassModel = new SetPasswordModel { NewPassword = password, ConfirmPassword = password };
-            var sRes = client.PostAsJsonAsync("/api/Account/SetPassword", setPassModel);
-            sRes.Wait();
-            var sContent = sRes.Result.Content.ReadAsStringAsync().Result;
-            Assert.AreEqual(HttpStatusCode.BadRequest, sRes.Result.StatusCode);
+            var sRes = client.PostAsJsonAsync(routPrefix+"/SetPassword", setPassModel).Result;
+            var sContent = sRes.Content.ReadAsStringAsync().Result;
+            Assert.AreEqual(HttpStatusCode.BadRequest, sRes.StatusCode);
 
         }
 
@@ -139,11 +130,10 @@ namespace AutofacOwinAuth.WebAPI.Tests
         {
             var email = Email;
             var newPassword = Password;
-            var resetPassModel = new ResetPasswordModel {Email = email, NewPassword=newPassword};
+            var resetPassModel = new ResetPasswordModel { Email = email, NewPassword = newPassword };
             var client = GetClient();
-            var resetRes = client.PostAsJsonAsync("/api/Account/ResetPassword", resetPassModel);
-            resetRes.Wait();
-            Assert.AreEqual(true, resetRes.Result.IsSuccessStatusCode);
+            var resetRes = client.PostAsJsonAsync(routPrefix+"/ResetPassword", resetPassModel).Result;
+            Assert.AreEqual(HttpStatusCode.OK, resetRes.StatusCode);
         }
     }
 }

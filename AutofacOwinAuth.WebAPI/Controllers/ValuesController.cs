@@ -35,7 +35,6 @@ namespace AutofacOwinAuth.WebAPI.Controllers
             }
             return "value";
         }
-        [AllowAnonymous]
         public bool Get([FromUri] string value1, string value2)
         {
             var values = Get();

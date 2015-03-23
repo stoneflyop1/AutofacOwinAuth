@@ -292,12 +292,6 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\AutofacOwinAuth.Core\AutofacOwinAuth.Core.csproj">
-      <Project>{16c9f8e0-7209-4a8f-8964-8fa4e9d4dbac}</Project>
-      <Name>AutofacOwinAuth.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

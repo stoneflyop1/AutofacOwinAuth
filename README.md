@@ -38,3 +38,4 @@
 * [http://leastprivilege.com/2013/11/26/dissecting-the-web-api-individual-accounts-templatepart-3-external-accounts/](http://leastprivilege.com/2013/11/26/dissecting-the-web-api-individual-accounts-templatepart-3-external-accounts/)
 * [http://www.asp.net/web-api/overview/security/individual-accounts-in-web-api](http://www.asp.net/web-api/overview/security/individual-accounts-in-web-api)
 * [http://tech.trailmax.info/2014/09/aspnet-identity-and-ioc-container-registration/](http://tech.trailmax.info/2014/09/aspnet-identity-and-ioc-container-registration/)
+* [http://www.asp.net/aspnet/overview/owin-and-katana/owin-oauth-20-authorization-server](http://www.asp.net/aspnet/overview/owin-and-katana/owin-oauth-20-authorization-server)
