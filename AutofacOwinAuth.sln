@@ -16,6 +16,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutofacOwinAuth.AuthorizationServer", "AutofacOwinAuth.AuthorizationServer\AutofacOwinAuth.AuthorizationServer.csproj", "{B0A5BC64-7F0E-4E2A-A627-F6C33FFEFB91}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutofacOwinAuth.WebAPI.Core", "AutofacOwinAuth.WebAPI.Core\AutofacOwinAuth.WebAPI.Core.csproj", "{30EC4742-29D6-433F-886B-AC947F96DC0E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutofacOwinAuth.WebAPI.OwinHost", "AutofacOwinAuth.WebAPI.OwinHost\AutofacOwinAuth.WebAPI.OwinHost.csproj", "{5BC30777-A95D-4431-8E0D-5AD2F71E8186}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutofacOwinAuth.WebAPI.WebApplication", "AutofacOwinAuth.WebAPI.WebApplication\AutofacOwinAuth.WebAPI.WebApplication.csproj", "{421EC3F6-FF45-4B85-ACF8-886F8288E520}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -42,6 +48,18 @@ Global
 		{B0A5BC64-7F0E-4E2A-A627-F6C33FFEFB91}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B0A5BC64-7F0E-4E2A-A627-F6C33FFEFB91}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B0A5BC64-7F0E-4E2A-A627-F6C33FFEFB91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30EC4742-29D6-433F-886B-AC947F96DC0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30EC4742-29D6-433F-886B-AC947F96DC0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30EC4742-29D6-433F-886B-AC947F96DC0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30EC4742-29D6-433F-886B-AC947F96DC0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BC30777-A95D-4431-8E0D-5AD2F71E8186}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BC30777-A95D-4431-8E0D-5AD2F71E8186}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BC30777-A95D-4431-8E0D-5AD2F71E8186}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BC30777-A95D-4431-8E0D-5AD2F71E8186}.Release|Any CPU.Build.0 = Release|Any CPU
+		{421EC3F6-FF45-4B85-ACF8-886F8288E520}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{421EC3F6-FF45-4B85-ACF8-886F8288E520}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{421EC3F6-FF45-4B85-ACF8-886F8288E520}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{421EC3F6-FF45-4B85-ACF8-886F8288E520}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

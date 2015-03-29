@@ -6,9 +6,9 @@
 //using System.Web.Http;
 //using Autofac;
 //using Autofac.Integration.WebApi;
-//using AutofacOwinAuth.Core.Data;
-//using AutofacOwinAuth.Core.Domain;
-//using AutofacOwinAuth.Core.Service;
+////using AutofacOwinAuth.Core.Data;
+////using AutofacOwinAuth.Core.Domain;
+////using AutofacOwinAuth.Core.Service;
 //using Microsoft.AspNet.Identity;
 //using Microsoft.AspNet.Identity.Owin;
 //using Microsoft.Owin.Security;
@@ -42,7 +42,7 @@
 //            // Register repositories by using Autofac's OpenGenerics feature
 //            // More info: http://code.google.com/p/autofac/wiki/OpenGenerics
 //            builder.RegisterGeneric(typeof(EfRepository<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
-            
+
 //            //Services
 //            builder.RegisterType<UserService>().As<IUserService>().InstancePerLifetimeScope();
 //            builder.RegisterType<ApplicationUserStore>().As<IUserStore<User, int>>().InstancePerLifetimeScope();

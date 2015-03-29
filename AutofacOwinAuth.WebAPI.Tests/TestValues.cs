@@ -33,8 +33,8 @@ namespace AutofacOwinAuth.WebAPI.Tests
             client.DefaultRequestHeaders.Add("Authorization", token.TokenType + " " + token.AccessToken);
             var res = client.GetAsync(_routePrefix + "?value1=value1&value2=value2");
             var content = res.Result.Content.ReadAsStringAsync().Result;
-            var has = JsonConvert.DeserializeObject<bool>(content);
-            Assert.IsTrue(has);
+            var has = JsonConvert.DeserializeObject<string>(content);
+            Assert.NotNull(has);
         }
 
 

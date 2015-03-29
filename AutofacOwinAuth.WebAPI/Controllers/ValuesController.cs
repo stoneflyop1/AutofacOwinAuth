@@ -35,22 +35,24 @@ namespace AutofacOwinAuth.WebAPI.Controllers
             }
             return "value";
         }
-        public bool Get([FromUri] string value1, string value2)
+        public string Get([FromUri] string value1, string value2)
         {
+            var userId = User.Identity.GetUserId<int>();
+            var userName = User.Identity.GetUserName();
             var values = Get();
-            return values.Any(c => c == value1) && values.Any(c=>c==value2);
+            return  userId+" "+ userName+ " " + (values.Any(c => c == value1) && values.Any(c=>c==value2));
         }
 
         //// POST api/values
         //public void Post([FromBody]string value)
         //{
         //}
-        [AllowAnonymous]
+
         public void Post([FromUri] string value1, bool save, [FromBody]string value2)
         {
             
         }
-        [AllowAnonymous]
+
         public IHttpActionResult Post(DateModel model)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
