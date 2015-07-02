@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="Scripts/jquery-1.10.2.min.js"></script>
+	<script type="text/javascript">
+	$(function() {
+		$.ajax({
+		    method: 'post',
+		    url: 'http://localhost:13648/api/Auth/CorsTest?content=test',
+		    headers: {
+		        Authorization: 'bearer NH1jH0MSnbwHrK-WEEe00fpc54KWSP4361hQD0k9Bm8c1e4RGwKN8VxkQ2BoECeZpwjAakYZV7ye-vFtIUgGD4W-Mcy_jNAI1oll3kK4aEZKvG7YoPfkZ0GmWEE42qkWzAhHUjWcC3B0fgw8jpE264lLBP_EQleWhmAhyg75Uyo4utv5Ue0qtXv5t1XH4QHqyXodjoN2pgGC0V6f089EnU9nXh8h0GoWzT6V338MG03IWVW4f6IS4LjbzO6cJ-hxLSN_r2tHla9Lw-jTcrTfiR0R2FrgblXm_AhaMp2wK-rHkf2hZUXurfsoixpfcHX9VVdADPjtB4m5EHIMmIJUbJRppI-c__hNoDsJ87s9x41VLpTYYiIj5NgTkHLkRmd2FGNh1dFRF8jnsaSvPDZEpQ',
+		    	'Access-Control-Allow-Origin': '*'
+		    },
+		    xhrFields: {
+		        withCredentials: true
+		    }
+		}).done(function(data) {
+			alert(JSON.stringify(data));
+		});
+	});
+	</script>
+</head>
+<body>
+
+</body>
+</html>
