@@ -28,7 +28,7 @@
 //        private const string LocalLoginProvider = "Local";
 //        private UserManager<User, int> _userManager;
 
-//        public AccountController(UserManager<User,int> userManager, SignInManager<User, int> signInManager
+//        public AccountController(UserManager<User, int> userManager, SignInManager<User, int> signInManager
 //            ) //,ISecureDataFormat<AuthenticationTicket> accessTokenFormat
 //        {
 //            _userManager = userManager;
@@ -75,7 +75,8 @@
 
 //            var logins = user.Logins.Select(linkedAccount => new UserLoginInfoViewModel
 //            {
-//                LoginProvider = linkedAccount.LoginProvider, ProviderKey = linkedAccount.ProviderKey
+//                LoginProvider = linkedAccount.LoginProvider,
+//                ProviderKey = linkedAccount.ProviderKey
 //            }).ToList();
 
 //            if (user.PasswordHash != null)
@@ -107,7 +108,7 @@
 
 //            IdentityResult result = await _userManager.ChangePasswordAsync(User.Identity.GetUserId<int>(), model.OldPassword,
 //                model.NewPassword);
-            
+
 //            if (!result.Succeeded)
 //            {
 //                return GetErrorResult(result);

@@ -9,8 +9,10 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Net.Http;
+using System.Web.Http.Cors;
 using AutofacOwinAuth.AuthorizationServer.Models;
 using AutofacOwinAuth.AuthorizationServer.Providers;
+using AutofacOwinAuth.AuthorizationServer.Results;
 using AutofacOwinAuth.Core.Domain;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -45,6 +47,13 @@ namespace AutofacOwinAuth.AuthorizationServer.Controllers
         {
             Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
             return Ok();
+        }
+
+        [EnableCors(origins: "*", headers: "*", methods: "*", SupportsCredentials = true)]
+        [HttpPost]
+        public IHttpActionResult CorsTest(string content)
+        {
+            return Ok(content);
         }
 
         // POST api/Account/ChangePassword
@@ -102,6 +111,63 @@ namespace AutofacOwinAuth.AuthorizationServer.Controllers
             if (!result.Succeeded)
             {
                 return GetErrorResult(result);
+            }
+
+            return Ok();
+        }
+
+        // GET api/Account/ExternalLogin
+        [OverrideAuthentication]
+        [HostAuthentication(DefaultAuthenticationTypes.ExternalCookie)]
+        [AllowAnonymous]
+        [Route("ExternalLogin", Name = "ExternalLogin")]
+        public async Task<IHttpActionResult> GetExternalLogin(string provider, string error = null)
+        {
+            if (error != null)
+            {
+                return Redirect(Url.Content("~/") + "#error=" + Uri.EscapeDataString(error));
+            }
+
+            if (!User.Identity.IsAuthenticated)
+            {
+                return new ChallengeResult(provider, this);
+            }
+
+            ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
+
+            if (externalLogin == null)
+            {
+                return InternalServerError();
+            }
+
+            if (externalLogin.LoginProvider != provider)
+            {
+                Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
+                return new ChallengeResult(provider, this);
+            }
+
+            var user = await _userManager.FindAsync(new UserLoginInfo(externalLogin.LoginProvider,
+                externalLogin.ProviderKey));
+
+            bool hasRegistered = user != null;
+
+            if (hasRegistered)
+            {
+                Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
+
+                ClaimsIdentity oAuthIdentity = await _userManager.CreateIdentityAsync(user,
+                    OAuthDefaults.AuthenticationType);
+                ClaimsIdentity cookieIdentity = await _userManager.CreateIdentityAsync(user,
+                    CookieAuthenticationDefaults.AuthenticationType);
+
+                AuthenticationProperties properties = ApplicationOAuthProvider.CreateProperties(user.UserName);
+                Authentication.SignIn(properties, oAuthIdentity, cookieIdentity);
+            }
+            else
+            {
+                IEnumerable<Claim> claims = externalLogin.GetClaims();
+                var identity = new ClaimsIdentity(claims, OAuthDefaults.AuthenticationType);
+                Authentication.SignIn(identity);
             }
 
             return Ok();
