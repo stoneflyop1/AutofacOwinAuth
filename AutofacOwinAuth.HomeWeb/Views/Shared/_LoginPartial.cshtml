@@ -1,0 +1,23 @@
+﻿@using Microsoft.AspNet.Identity
+@{
+    var loginUrl = System.Configuration.ConfigurationManager.AppSettings["loginUrl"];
+    var registerUrl = System.Configuration.ConfigurationManager.AppSettings["registerUrl"];
+    var logoutUrl = System.Configuration.ConfigurationManager.AppSettings["logoutUrl"];
+    var currentUrl = Server.UrlEncode(Request.Url.ToString());
+}
+@if (Request.IsAuthenticated)
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>
+            @Html.ActionLink("你好，" + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+        </li>
+        <li><a href="@logoutUrl">注销</a></li>
+    </ul>
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li><a href="@(registerUrl)?returnUrl=@(currentUrl)">注册</a></li>
+        <li><a href="@(loginUrl)?returnUrl=@(currentUrl)">登录</a></li>
+    </ul>
+}

@@ -53,8 +53,12 @@ namespace AutofacOwinAuth.AuthorizationServer.Controllers
         //
         // GET: /Account/Login
         [AllowAnonymous]
-        public ActionResult Login(string returnUrl)
+        public ActionResult Login(string type, string returnUrl)
         {
+            if (type == "logout")
+            {
+                return LogOff();
+            }
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -135,8 +139,9 @@ namespace AutofacOwinAuth.AuthorizationServer.Controllers
         //
         // GET: /Account/Register
         [AllowAnonymous]
-        public ActionResult Register()
+        public ActionResult Register(string returnUrl)
         {
+            ViewBag.ReturnUrl = returnUrl;
             return View();
         }
 
@@ -145,7 +150,7 @@ namespace AutofacOwinAuth.AuthorizationServer.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register(RegisterViewModel model, string returnUrl)
         {
             if (ModelState.IsValid)
             {
@@ -160,8 +165,7 @@ namespace AutofacOwinAuth.AuthorizationServer.Controllers
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "确认你的帐户", "请通过单击 <a href=\"" + callbackUrl + "\">這裏</a>来确认你的帐户");
-
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToLocal(returnUrl);
                 }
                 AddErrors(result);
             }
@@ -331,7 +335,7 @@ namespace AutofacOwinAuth.AuthorizationServer.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    return Redirect(returnUrl); //RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -443,7 +447,7 @@ namespace AutofacOwinAuth.AuthorizationServer.Controllers
 
         private ActionResult RedirectToLocal(string returnUrl)
         {
-            if (Url.IsLocalUrl(returnUrl))
+            if (!String.IsNullOrEmpty(returnUrl))//(Url.IsLocalUrl(returnUrl))
             {
                 return Redirect(returnUrl);
             }
